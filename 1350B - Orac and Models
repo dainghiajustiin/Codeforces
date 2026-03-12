@@ -1,0 +1,30 @@
+#include<bits/stdc++.h>
+#define ll long long 
+using namespace std;
+
+const int MAXN = (int) 1e5 + 7;
+
+int n, a[MAXN], dp[MAXN];
+
+signed main(){
+    ios_base::sync_with_stdio(0);
+    cin.tie(0), cout.tie(0);
+
+    int nTest;
+    cin >> nTest;
+
+    for(int _ = 0; _ < nTest; _++){
+        int ans = 0;
+        cin >> n;
+        for(int i = 1; i <= n; i++) cin >> a[i], dp[i] = 1;
+        for(int i = n; i > 0; i--){
+            for(int j = 2*i; j <= n; j += i){
+                if(a[i] < a[j]) dp[i] = max(dp[i], dp[j] + 1);
+            }
+            ans = max(ans, dp[i]);
+        }
+        cout << ans << '\n';
+    }
+
+    return 0;
+}
