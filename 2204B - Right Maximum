@@ -1,0 +1,101 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+//#define int long long
+#define fi first
+#define se second
+#define pb push_back
+#define el '\n'
+#define all(x) x.begin(), x.end()
+
+using ll = long long;
+using pii = pair<int,int>;
+using ull = unsigned long long;
+
+const int MOD1 = 1000000007;
+const int MOD2 = 998244353;
+
+mt19937_64 rd(time(0));
+ll rand(ll l, ll r){
+    return l + rd() % (r - l + 1);
+}
+
+///
+const int MAXN = (int) 2e5 + 7;
+
+int a[MAXN], st[MAXN*4], n;
+
+///
+
+void upd(int id, int l, int r, int pos, int val){
+    if(pos < l || r < pos) return;
+    if(l == r){
+        st[id] = val;
+        return;
+    }
+    int m = l + r >> 1;
+    upd(id<<1, l, m, pos, val);
+    upd(id<<1|1, m+1, r, pos, val);
+    int it1 = st[id<<1];
+    int it2 = st[id<<1|1];
+
+    if(a[it1] > a[it2]) st[id] = it1;
+    else st[id] = it2;
+}
+
+int get(int id, int l, int r, int u, int v){
+    if(v < l || r < u) return 0;
+    if(u <= l && r <= v) return st[id];
+    int m = l + r >> 1;
+    int it1 = get(id << 1, l, m, u, v);
+    int it2 = get(id << 1|1, m+1, r, u, v);
+
+    if(a[it1] > a[it2]) return it1;
+    else return it2;
+}
+
+void init(){
+
+}
+
+void solve(int iTest){
+    cin >> n;
+    for(int i = 1; i <= n; i++){
+        cin >> a[i];
+    }
+    a[0] = -1;
+    for(int i = 1; i <= n; i++){
+        upd(1, 1, n, i, i);
+    }
+    int lim = n, ans = 0;
+    while(lim > 0){
+        int v = get(1, 1, n, 1, lim);
+        ans++;
+        lim = v - 1;
+    }
+    cout << ans << el;
+}
+
+signed main(){
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+
+    #define task "buon"
+    if(fopen(task".inp", "r")){
+        freopen(task".inp", "r", stdin);
+        freopen(task".out", "w", stdout);
+    }
+
+    init();
+
+    int nTest = 1;
+    cin >> nTest;
+
+    for(int iTest = 1; iTest <= nTest; iTest++){
+        solve(iTest);
+    }
+
+    return 0;
+}
+
+/// Code by: Justiin
