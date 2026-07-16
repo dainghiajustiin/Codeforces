@@ -1,0 +1,83 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define endl "\n"
+#define p_q priority_queue
+#define pb push_back
+#define fi first
+#define se second
+#define bit(n,i) (((n)>>(i))&1)
+
+typedef long long ll;
+typedef unsigned long long ull;
+typedef pair<int,ll> pil;
+typedef pair<int,int> pii;
+const int M=2e5 + 6;
+const int mod=1e9+7;
+const int inf=1e9+7;
+
+int a[M], id[M];
+bool vis[M];
+
+int main()
+{
+	ios_base::sync_with_stdio(false);
+    cin.tie(0);cout.tie(0);
+//	freopen(".inp", "r", stdin);
+//	freopen(".out", "w", stdout);
+
+    int t; cin>>t;
+    while (t--)
+    {
+        int n,x; cin>>n>>x;
+        int k=0;
+        for (int i=1;i<=n;i++)
+        {
+            int m; cin>>m;
+            if (x%m==0 and m>1) a[++k]=m, id[k]=i;
+        }
+        int ans=0;
+        if (k==0) 
+        {
+            cout<<1<<endl;
+            continue;
+        }
+        vector <ll> v;
+        for (int i=1;i<=x;i++) vis[i]=0;
+        stack <int> s;
+        for (int i=1;i<=k;i++)
+        {
+            n=v.size();
+            
+            for (int j=0;j<n;j++)
+            {
+                ll tmp=v[j]*a[i];
+                if (tmp>x) continue;
+                if (tmp<x and vis[tmp]==false) v.pb(tmp), vis[tmp]=true, s.push(tmp);
+                if (tmp==x)
+                {
+                    ans++;
+                    while (s.size())
+                    {
+                        vis[s.top()]=false;
+                        s.pop();
+                    }
+                    while (v.size()) v.pop_back();
+                    v.pb(a[i]); s.push(a[i]); vis[a[i]]=true;
+                    break;
+                }
+            }
+            if (vis[a[i]]==false)
+            {
+                v.pb(a[i]);
+                s.push(a[i]);
+                vis[a[i]]=true;
+            }
+            
+        }
+        cout<<ans+1<<endl;
+        
+    }
+    
+	return 0;
+}
