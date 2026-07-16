@@ -1,0 +1,79 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+#define fi first
+#define se second
+#define int long long
+#define pb push_back
+#define el '\n'
+#define all(x) x.begin(), x.end()
+#define submit(x) if( fopen(x".inp", "r") ){ freopen(x".inp", "r", stdin); freopen(x".out", "w", stdout); }
+
+typedef long long ll;
+using pii = pair<int,int>;
+const int MOD = 1e9 + 7, inf = 1e18 + 7;
+using ull = unsigned long long;
+
+int n, m;
+vector<int> subset[2];
+vector<int> Set[2];
+bool dd[20];
+
+void backtrack(int id, int lim, int num){
+    if(id == lim){
+        int s = 0;
+        for(int i = 0; i < lim; i++)
+            if(dd[i]) s = (s + subset[num][i]) % m;
+
+        Set[num].pb(s);
+        return;
+    }
+
+    dd[id] = 0;
+    backtrack(id + 1, lim, num);
+
+    dd[id] = 1;
+    backtrack(id + 1, lim, num);
+}
+
+signed main(){
+    cin.tie(0)->ios_base::sync_with_stdio(0);
+
+    cin >> n >> m;
+
+    for(int i = 1; i <= n/2; i++){
+        int Ai; cin >> Ai;
+        subset[0].pb(Ai % m);
+    }
+
+    for(int i = n/2 + 1; i <= n; i++){
+        int Ai; cin >> Ai;
+        subset[1].pb(Ai % m);
+    }
+
+    memset(dd, 0, sizeof dd);
+    backtrack(0, n/2, 0);
+
+    memset(dd, 0, sizeof dd);
+    backtrack(0, n - n/2, 1);
+
+    sort(all(Set[1]));
+
+    int ans = 0;
+
+    for(int it:Set[0]){
+        int k = (m - 1 - it) % m;
+        if(k < 0) k += m;
+
+        int pivot = upper_bound(all(Set[1]), k) - Set[1].begin() - 1;
+        if(pivot < 0) continue;
+
+        ans = max(ans, Set[1][pivot] + it);
+    }
+
+    cout << ans;
+
+    return 0;
+}
+
+// Justiin
