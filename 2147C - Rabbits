@@ -1,0 +1,94 @@
+#include <bits/stdc++.h>
+using namespace std;
+const int maxN = 2e5;
+int n;
+string s;
+vector<int> pos;
+int g[maxN + 1][2];
+
+int f(int i, int b)
+{
+    if (i == pos.size() - 1)
+    {
+        if (pos.back() == n && b == 1)
+            return true;
+        return !b;
+    }
+    int& gval = g[i][b];
+    if (gval != -1)
+        return gval;
+    if (b == 1)
+    {
+        if (i == pos.size() - 1)
+        {
+            gval = 0;
+            return gval;
+        }
+        if (pos[i + 1] - pos[i] > 2)
+        {
+            gval = 0;
+            return gval;
+        }
+        if (pos[i + 1] - pos[i] == 2)
+            return f(i + 1, 0);
+        int v1 = f(i + 1, 0);
+        int v2 = f(i + 1, 1);
+        gval = max(v1, v2);
+        return gval;
+    }
+    int v1 = 0;
+    if (pos[i + 1] - pos[i] == 1)
+        v1 = f(i + 1, 0);
+    int v2 = f(i + 1, 1);
+    return max(v1, v2);
+}
+
+int main()
+{
+    //freopen("inp.txt", "r", stdin);
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+    int ntest;
+    cin >> ntest;
+    while (ntest-- > 0)
+    {
+        cin >> n;
+        cin >> s;
+        n = (int)s.size();
+        if (n == 4 && s[0] == '1')
+            cout << "";
+        s = " " + s;
+        pos.clear();
+        pos.push_back(0);
+        for (int i = 1; i <= n; ++i)
+        {
+            if (s[i] == '0')
+                pos.push_back(i);
+            g[i][0] = g[i][1] = -1;
+        }
+        if (s[n] == '0')
+        {
+            int lmm = pos.size() - 1;
+            g[lmm][1] = 1;
+            --lmm;
+            while (lmm > 0 && pos[lmm] == pos[lmm + 1] - 1)
+            {
+                g[lmm][1] = 1;
+                --lmm;
+            }
+        }
+        if (pos.size() == 1)
+        {
+            cout << "YES\n";
+            continue;
+        }
+        int v1 = 0;
+        if (pos.size() > 1 && pos[1] == 1)
+            v1 = f(1, 0);
+        int v2 = f(1, 1);
+        if (v1 == 0 && v2 == 0)
+            cout << "NO\n";
+        else
+            cout << "YES\n";
+    }
+}
