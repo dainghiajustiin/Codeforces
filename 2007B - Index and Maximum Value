@@ -1,0 +1,73 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+#define int long long
+#define Mp make_pair
+#define fi first
+#define se second
+#define pb push_back
+#define el '\n'
+#define all(x) x.begin(), x.end()
+
+const int MOD = (int) 1e9 + 7;
+const int inf = (int) 1e18 + 7;
+using pii = pair<int,int>;
+
+/// code
+const int maxn = (int) 1e5 + 3;
+int n, m;
+int a[maxn];
+
+void solve(){
+    cin >> n >> m;
+    for(int i = 1; i <= n; i++) cin >> a[i];
+    sort(a + 1, a + 1 + n);
+
+    int mx = a[n];
+    int mx2 = a[n - 1];
+
+    while(m--){
+        char c;
+        int l, r;
+        cin >> c >> l >> r;
+        if(c == '-'){
+            if(l <= mx && mx <= r){
+                mx--;
+            }
+            if(l <= mx2 && mx2 <= r){
+                mx2--;
+            }
+            if(mx2 > mx) swap(mx, mx2);
+            cout << mx << ' ';
+        }
+        else{
+            if(l <= mx && mx <= r){
+                mx++;
+            }
+            if(l <= mx2 && mx2 <= r){
+                mx2++;
+            }
+            if(mx2 > mx) swap(mx, mx2);
+            cout << mx << ' ';
+        }
+    }
+    cout << el;
+}
+
+signed main(){
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+
+//    #define task ""
+//    freopen(task".inp", "r", stdin);
+//    freopen(task".out", "w", stdout);
+
+    int t; cin >> t;
+    while(t--) solve();
+
+    return 0;
+}
+///      Today is 30.08.2024
+///    Do your best because tomorrow will be better!
+///                                sign
+///                               Justiin
