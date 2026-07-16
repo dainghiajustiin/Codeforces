@@ -1,0 +1,65 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+#define fi first
+#define se second
+#define int long long
+#define pb push_back
+#define el '\n'
+#define all(x) x.begin(), x.end()
+#define Mp make_pair
+typedef long long ll;
+using pii = pair<int,int>;
+const int MOD = (int) 1e9 + 7, inf = (int) 1e18 + 7;
+using ull = unsigned long long;
+
+/// code
+
+const int maxn = (int) 3e5 + 3;
+char s[maxn];
+pii child[maxn];
+
+int dfs(int u){
+    if(child[u].fi == 0 && child[u].se == 0) return 0;
+    int min_ope = inf;
+
+    if(child[u].fi != 0){
+        int tmp = dfs(child[u].fi);
+        if(s[u] != 'L') tmp++;
+
+        min_ope = min(min_ope, tmp);
+    }
+
+    if(child[u].se != 0){
+        int tmp = dfs(child[u].se);
+        if(s[u] != 'R') tmp++;
+
+        min_ope = min(min_ope, tmp);
+    }
+
+    return min_ope;
+}
+
+void solve(){
+    int n; cin >> n;
+    for(int i = 1; i <= n; i++) cin >> s[i];
+    for(int i = 1; i <= n; i++){
+        cin >> child[i].fi >> child[i].se;
+    }
+
+    int ans = dfs(1);
+    cout << ans << el;
+}
+
+signed main(){
+    cin.tie(0)->ios_base::sync_with_stdio(0);
+
+//    #define task ""
+//    freopen(task".inp", "r", stdin);
+//    freopen(task".out", "w", stdout);
+
+    int t; cin >> t;
+    while(t--) solve();
+
+    return 0;
+}   /// Justiin
