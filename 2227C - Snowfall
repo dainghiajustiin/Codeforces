@@ -1,0 +1,32 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+vector<int> v[4];
+
+signed main(){
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+
+    #define pb push_back
+    int nTest;
+    cin >> nTest;
+    while(nTest-->0){
+        int n;
+        cin >> n;
+        for(int i = 0; i < 4; i++) v[i].clear();
+        for(int i = 0; i < n; i++){
+            int x; cin >> x;
+
+            if(x % 6 == 0) v[0].pb(x);
+            else if(x % 2 == 0) v[1].pb(x);
+            else if(x % 3 == 0) v[3].pb(x);
+            else v[2].pb(x);
+        }
+        for(int i = 0; i < 4; i++){
+            for(auto elm:v[i]) cout << elm << ' ';
+        }
+        cout << '\n';
+    }
+
+    return 0;
+}
