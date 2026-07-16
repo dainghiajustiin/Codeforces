@@ -1,0 +1,43 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+#define fi first
+#define se second
+#define int long long
+#define pb push_back
+#define el '\n'
+#define all(x) x.begin(), x.end()
+#define Mp make_pair
+typedef long long ll;
+using pii = pair<int,int>;
+const int MOD = (int) 1e9 + 7, inf = (int) 1e18 + 7;
+using ull = unsigned long long;
+
+/// code
+const int maxn = (int) 1e5 + 3;
+int dp[maxn], f[maxn];
+
+signed main(){
+    cin.tie(0)->ios_base::sync_with_stdio(0);
+
+//    #define task ""
+//    freopen(task".inp", "r", stdin);
+//    freopen(task".out", "w", stdout);
+
+    f[1] = 1;
+    dp[1] = 0;
+
+    for(int i = 2; i <= (int) 1e5; i++){
+        f[i] = f[i - 1] * i % MOD;
+        dp[i] = (dp[i - 1] + 2 * (i - 1)) % MOD;
+    }
+
+    int t; cin >> t;
+    while(t--){
+        int n; cin >> n;
+        int ans = dp[n] * f[n] % MOD;
+        cout << ans << el;
+    }
+
+    return 0;
+}   /// Justiin
