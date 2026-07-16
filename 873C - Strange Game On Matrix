@@ -1,0 +1,59 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+#define fi first
+#define se second
+#define int long long
+#define pb push_back
+#define el '\n'
+#define all(x) x.begin(), x.end()
+#define submit(x) if( fopen(x".inp", "r") ){ freopen(x".inp", "r", stdin); freopen(x".out", "w", stdout); }
+
+typedef long long ll;
+using pii = pair<int,int>;
+const int MOD = 1e9 + 7, inf = 1e18 + 7;
+using ull = unsigned long long;
+
+int a[101][101];
+int ps[101][101];
+int n, m, k;
+int ans1 = 0, ans2 = 0;
+
+signed main(){
+    ios_base::sync_with_stdio(0);
+    cin.tie(0); cout.tie(0);
+
+    cin >> n >> m >> k;
+
+    for(int i = 1; i <= n; i++)
+        for(int j = 1; j <= m; j++) cin >> a[i][j];
+
+    for(int i = 1; i <= n; i++)
+        for(int j = 1; j <= m; j++) ps[i][j] = ps[i - 1][j] + a[i][j];
+
+    for(int j = 1; j <= m; j++){
+        int val = 0, cnt = 0, cnt_ = 0;
+        for(int i = 1; i <= n; i++){
+            if(a[i][j]){
+                int idx = min(i + k - 1, n);
+                int val_ = ps[idx][j] - ps[i - 1][j];
+
+                if(val < val_){
+                    val = val_;
+                    cnt = cnt_;
+                }
+
+                cnt_++;
+            }
+        }
+
+        ans1 += val;
+        ans2 += cnt;
+    }
+
+    cout << ans1 << ' ' << ans2;
+
+    return 0;
+}
+
+// Justiin
