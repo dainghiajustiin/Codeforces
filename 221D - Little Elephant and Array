@@ -1,0 +1,87 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+const int N = (int) 1e5 + 3;
+
+int nSize, nQuery;
+int block;
+int res = 0;
+int a[N], cnt[N], ans[N];
+
+struct query{
+    int l, r;
+    int id;
+} q[N];
+
+bool cmp(query& X, query& Y){
+    if(X.l/block == Y.l/block) return X.r < Y.r;
+    return X.l/block < Y.l/block;
+}
+
+main(){
+    ios_base::sync_with_stdio(0);
+
+    #define TASK "LittleElephantandArray"
+    if(fopen(TASK".inp", "r")){
+        freopen(TASK".inp", "r", stdin);
+        freopen(TASK".out", "w", stdout);
+//        freopen(TASK".ans", "w", stdout);
+    }
+
+    cin >> nSize >> nQuery;
+    block = sqrt(nSize);
+
+    for(int i = 1; i <= nSize; i++){
+        cin >> a[i];
+        if(a[i] > nSize) a[i] = N - 2;
+    }
+
+    for(int i = 1; i <= nQuery; i++){
+        cin >> q[i].l >> q[i].r;
+        q[i].id = i;
+    }
+
+    sort(q + 1, q + 1 + nQuery, cmp);
+
+    int L = 1, R = 0;
+
+    for(int i = 1; i <= nQuery; i++){
+        int L_ = q[i].l;
+        int R_ = q[i].r;
+
+        while(L > L_){
+            L--;
+            if(cnt[a[L]] == a[L] && a[L] != 0) res--;
+            cnt[a[L]]++;
+            if(cnt[a[L]] == a[L] && a[L] != 0) res++;
+        }
+
+        while(R < R_){
+            R++;
+            if(cnt[a[R]] == a[R] && a[R] != 0) res--;
+            cnt[a[R]]++;
+            if(cnt[a[R]] == a[R] && a[R] != 0) res++;
+        }
+
+        while(L < L_){
+            if(cnt[a[L]] == a[L] && a[L] != 0) res--;
+            cnt[a[L]]--;
+            if(cnt[a[L]] == a[L] && a[L] != 0) res++;
+            L++;
+        }
+
+        while(R > R_){
+            if(cnt[a[R]] == a[R] && a[R] != 0) res--;
+            cnt[a[R]]--;
+            if(cnt[a[R]] == a[R] && a[R] != 0) res++;
+            R--;
+        }
+
+        ans[q[i].id] = res;
+    }
+
+    for(int i = 1; i <= nQuery; i++) cout << ans[i] << '\n';
+
+    return 0;
+}
+ 
