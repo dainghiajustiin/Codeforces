@@ -1,0 +1,45 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+#define name ""
+#define fi first
+#define se second
+#define pb push_back
+#define el '\n'
+#define all(x) x.begin(), x.end()
+typedef long long ll;
+using pii = pair<int,int>;
+const int MOD = 1e9 + 7;
+using ull = unsigned long long;
+
+mt19937_64 rd(time(0));
+
+ll rand(ll l, ll r){
+    return l + rd() % (r - l + 1);
+}
+
+signed main(){
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+
+    int nTest = 1;
+//    cin >> nTest;
+
+    for(int iTest = 1; iTest <= nTest; iTest++){
+        int a, b, c;
+        cin >> a >> b >> c;
+
+        int ma = max({a, b, c});
+        int mi = min({a, b, c});
+        int mid = a + b + c - ma - mi;
+
+        if(ma - mi >= 10) cout << "check again";
+        else cout << "final " << mid;
+
+        cout << el;
+    }
+
+    return 0;
+}
+
+// Justiin
