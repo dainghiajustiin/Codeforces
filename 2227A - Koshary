@@ -1,0 +1,17 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+signed main(){
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+
+    int nTest;
+    cin >> nTest;
+    while(nTest--){
+        int a, b;
+        cin >> a >> b;
+        cout << (a&1 && b&1 ? "NO" : "YES") << '\n';
+    }
+
+    return 0;
+}
