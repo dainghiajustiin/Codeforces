@@ -1,0 +1,49 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+/** Author: Nguyen Duy Quang **/
+
+#define test int T; cin >> T; while(T--)
+#define all(x) (x).begin(), (x).end()
+#define Bit(x, y) ((x >> y) & 1)
+#define int long long
+#define pb push_back
+#define fi first
+#define sc second
+#define submitFile(Task) freopen(Task".inp", "r", stdin); freopen(Task".out", "w", stdout);
+
+using pii = pair<int, int>;
+using ull = unsigned long long;
+const int INF = (int)1e18, MOD1 = (int)1e9 + 7, MOD2 = (int)998244353;
+template<class X, class Y> void maximize(X &a, const Y &b) { a = (a < b) ? b : a; }
+template<class X, class Y> void minimize(X &a, const Y &b) { a = (a > b) ? b : a; }
+template<class T> void add(T& a, T b) { a += b; if(a >= MOD1) a -= MOD1; }
+template<class T> void sub(T& a, T b) { a -= b; if(a <= 0) a += MOD1; }
+template<class T> T Abs(const T& a) { return (a < 0 ? -a : a); }
+
+mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
+int rand(int l, int r) { return l + rng() % (r - l + 1); }
+void sinhTest(int itest) { ofstream cout(("test" + to_string(itest) + ".inp").c_str()); }
+void solveTest(int itest) {
+    ifstream cin(("test" + to_string(itest) + ".inp").c_str());
+    ofstream cout(("test" + to_string(itest) + ".out").c_str());
+}
+
+///END OF TEMPLATE
+
+signed main() {
+    cin.tie(0)->ios_base::sync_with_stdio(0);
+    test {
+        int n; string s;
+        cin >> n >> s;
+        bool ok = 0;
+        for(int i = 0; i < n; i++) if(s[i] == '1') {
+            if((i == 0) || (i == n - 1) || (i < n - 1 && s[i + 1] == '1') || (i > 0 && s[i - 1] == '1')) {
+                ok = 1;
+                break;
+            }
+        }
+        cout << (ok ? "YES\n" : "NO\n");
+    }
+    return 0;
+}
