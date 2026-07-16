@@ -1,0 +1,49 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+#define ll long long
+#define Mp make_pair
+#define fi first
+#define se second
+#define pb push_back
+#define el '\n'
+#define all(x) x.begin(), x.end()
+
+const int MOD = (int) 1e9 + 7;
+const ll inf = (ll) 1e18 + 7;
+using pii = pair<int,int>;
+
+/// code
+const int maxn = (int) 2e5 + 3;
+int a[maxn], n, k;
+
+int get(int N){
+    return (N + 1) >> 1;
+}
+
+void solve(){
+    int n, k;
+    cin >> n >> k;
+    int L = n - k + 1;
+    int ans = get(n) - get(L - 1);
+
+    cout << (ans % 2 == 0 ? "YES" : "NO") << el;
+}
+
+signed main(){
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+
+//    #define task ""
+//    freopen(task".inp", "r", stdin);
+//    freopen(task".out", "w", stdout);
+
+    int t; cin >> t;
+    while(t--) solve();
+
+    return 0;
+}
+///      Today is 21.09.2024
+///    Do your best because tomorrow will be better!
+///                                sign
+///                               Justiin
